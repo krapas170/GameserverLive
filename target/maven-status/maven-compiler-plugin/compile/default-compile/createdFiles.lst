@@ -1,0 +1,5 @@
+com\minecraftstatus\listener\CommandListener.class
+com\minecraftstatus\Main.class
+com\minecraftstatus\commands\ClearCommand.class
+com\minecraftstatus\commands\types\ServerCommand.class
+com\minecraftstatus\CommandManager.class
