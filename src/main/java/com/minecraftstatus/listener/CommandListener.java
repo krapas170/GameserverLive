@@ -3,6 +3,7 @@ package com.minecraftstatus.listener;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import com.minecraftstatus.Main;
 import org.jetbrains.annotations.NotNull;
@@ -28,8 +29,8 @@ public class CommandListener extends ListenerAdapter{
         }
     }
 
-    /*@Override
+    @Override
     public void onReactionAdded(MessageReactionAddEvent event) {
             
-    }*/
+    }
 }

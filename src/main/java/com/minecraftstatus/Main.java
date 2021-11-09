@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 
 /*
 *   The Main class for the bot
-+   Starts the bot and owns all the Managers
+*   Starts the bot and owns all the Managers
 */
 public class Main {
     
