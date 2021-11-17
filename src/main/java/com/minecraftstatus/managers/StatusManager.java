@@ -1,12 +1,11 @@
 package com.minecraftstatus.managers;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer;
 
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
-public class StatusManager extends TimerTask{
+public class StatusManager {
 
     private Timer timer;
     private ShardManager bot;
@@ -25,16 +24,15 @@ public class StatusManager extends TimerTask{
     }
 
     public void startTimer() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(this, 0, time * 1000);
+        timer = new Timer(time * 1000, l -> onStatusChange());
+        timer.start();
     }
 
     public void stopTimer() {
-        timer.cancel();
+        timer.stop();
     }
 
-    @Override
-    public void run() {
+    private void onStatusChange() {
         String activity = activitys[rand(activitys.length)];
         setStatus(prep(activity, bot));
     }
