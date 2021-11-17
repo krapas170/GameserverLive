@@ -1,9 +1,5 @@
 package com.minecraftstatus.commands;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import com.minecraftstatus.Main;
 import com.minecraftstatus.commands.types.ServerCommand;
 

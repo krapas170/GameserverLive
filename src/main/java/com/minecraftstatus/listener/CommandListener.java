@@ -2,12 +2,9 @@ package com.minecraftstatus.listener;
 
 import com.minecraftstatus.Main;
 
-import org.jetbrains.annotations.NotNull;
-
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {

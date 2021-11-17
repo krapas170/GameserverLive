@@ -21,7 +21,7 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 public class Main {
     
     public static Main INSTANCE;
-    public final static String CONFIG_PATH = "./config.json";
+    public final static Config CONFIG = new Config("config.json");
     
     private ShardManager bot;
     private CommandManager commandManager;
@@ -37,7 +37,6 @@ public class Main {
     }
 
     public Main() throws LoginException, IllegalArgumentException {
-        Config.set("token", DCToken.TOKEN);
         INSTANCE = this;
         LiteSQL.connect();
 		SQLManager.onCreate();
@@ -57,7 +56,7 @@ public class Main {
     */
     private ShardManager buildBot() throws LoginException, IllegalArgumentException {
         DefaultShardManagerBuilder builder;
-        builder = DefaultShardManagerBuilder.createDefault(DCToken.TOKEN);
+        builder = DefaultShardManagerBuilder.createDefault(CONFIG.getString("token"));
         builder.setStatus(OnlineStatus.ONLINE);
         commandManager = new CommandManager();
         builder.addEventListeners(new CommandListener());
@@ -96,6 +95,6 @@ public class Main {
         bot.shutdown();
         LiteSQL.disconnect();
         System.out.printf("\n\n\n%s[Bot] %sshutdown!%s\n\n\n", Console.RED, Console.RED, Console.RESET);
-        Config.close();
+        CONFIG.close();
     }
 }
