@@ -15,7 +15,6 @@ import com.minecraftstatus.commands.types.ServerCommand;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 
 public class CommandManager {
     
@@ -33,7 +32,7 @@ public class CommandManager {
         commands.put("information", new CreatorinfoCommand());
         commands.put("info", new CreatorinfoCommand());
         commands.put("preview", new PreviewCommand());
-        commands.put("stop", new ConstructCommand());
+        commands.put("stop", new StopExitCommand());
     }
 
     public ServerCommand getCommand(String key) {

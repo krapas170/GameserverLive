@@ -30,6 +30,10 @@ public class Console {
         colors.put("orange", ORGANE);
     }
 
+    public static void test(String test) {
+        println("%reset%[%green%TEST%reset%] " + test);
+    } 
+
     public static void warn(String warn) {
         println("%reset%[%red%WARN%reset%] " + warn);
     }
