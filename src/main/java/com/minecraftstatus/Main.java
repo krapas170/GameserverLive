@@ -1,7 +1,10 @@
 package com.minecraftstatus;
 
+import com.minecraftstatus.commands.types.ServerCommand;
 import com.minecraftstatus.listener.CommandListener;
 import com.minecraftstatus.managers.CommandManager;
+import com.minecraftstatus.managers.LiteSQL;
+import com.minecraftstatus.managers.SQLManager;
 import com.minecraftstatus.managers.StatusManager;
 
 import java.util.Scanner;
@@ -18,6 +21,7 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 public class Main {
     
     public static Main INSTANCE;
+    public final static String CONFIG_PATH = "./config.json";
     
     private ShardManager bot;
     private CommandManager commandManager;
@@ -33,12 +37,19 @@ public class Main {
     }
 
     public Main() throws LoginException, IllegalArgumentException {
+        Config.set("token", DCToken.TOKEN);
         INSTANCE = this;
+        LiteSQL.connect();
+		SQLManager.onCreate();
         bot = buildBot();
         System.out.println("\n\n\nBot online!\n\n\n");
-        statusManager = new StatusManager(bot, 10, "-w %server guilds | +help", "-l %members member | +help", "-w you.");
+        statusManager = new StatusManager(bot, 3, "-w %server guilds | +help", "-l %members members | +help", "-w you.", "-l %voicechannels voice channels | +help", "-l %textchannels text channels | +help");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {shutdown(); System.out.println("Force shutdown!");}));
         startShutdownListener();
+    }
+
+    public static ServerCommand getCommand(String key) {
+        return INSTANCE.getCmdMan().getCommand(key);
     }
 
     /*
@@ -83,6 +94,8 @@ public class Main {
         statusManager.stopTimer();
         bot.setStatus(OnlineStatus.OFFLINE);
         bot.shutdown();
+        LiteSQL.disconnect();
         System.out.printf("\n\n\n%s[Bot] %sshutdown!%s\n\n\n", Console.RED, Console.RED, Console.RESET);
+        Config.close();
     }
 }
