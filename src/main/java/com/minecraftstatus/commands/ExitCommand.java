@@ -37,7 +37,7 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
     }
 
     public void cancel() {
-        cancel = true;
+        cancel = false;
     }
 
     @Override

@@ -1,14 +1,18 @@
 package com.minecraftstatus;
 
+import java.util.Scanner;
+
+import javax.security.auth.login.LoginException;
+
 import com.minecraftstatus.commands.types.ServerCommand;
+import com.minecraftstatus.configs.ServerConfig;
+import com.minecraftstatus.configs.SettingsConfig;
 import com.minecraftstatus.listener.CommandListener;
 import com.minecraftstatus.managers.CommandManager;
 import com.minecraftstatus.managers.LiteSQL;
 import com.minecraftstatus.managers.SQLManager;
 import com.minecraftstatus.managers.StatusManager;
 
-import java.util.Scanner;
-import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
@@ -21,7 +25,8 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 public class Main {
     
     public static Main INSTANCE;
-    public final static Config CONFIG = new Config("config.json");
+    public final static SettingsConfig CONFIG = new SettingsConfig();
+    public final static ServerConfig SERVER = new ServerConfig();
     
     private ShardManager bot;
     private CommandManager commandManager;

@@ -15,7 +15,7 @@ public class PingCommand implements ServerCommand{
         long gatewayping = channel.getJDA().getGatewayPing();
 
         channel.getJDA().getRestPing().queue((time) ->
-            channel.sendMessageFormat("```Pong! %dm```", time, gatewayping).queue()
+            channel.sendMessageFormat("```Pong! %dms```", time, gatewayping).queue()
         );
 
         message.addReaction(emoji).complete();
