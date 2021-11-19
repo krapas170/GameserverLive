@@ -1,5 +1,5 @@
 # Minecraft-Status-Discord-Bot
-Discord bot, which looks for the status of Minecraft servers
+Discord bot, which looks for the status of Minecraft servers and have some moderator commands
 
 
 
