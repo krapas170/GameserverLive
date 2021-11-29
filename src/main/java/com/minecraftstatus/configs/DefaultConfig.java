@@ -1,9 +1,21 @@
 package com.minecraftstatus.configs;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.HashMap;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.minecraftstatus.Console;
 
@@ -12,6 +24,7 @@ public class DefaultConfig {
     private final Gson gson = new Gson();
     private HashMap<String, Object> contents;
     String configPath;
+    private boolean fileChanged = false;
 
     /*
     *   Create a confic wrapper for the file in the path
@@ -64,17 +77,23 @@ public class DefaultConfig {
     }
 
     private void runWatchListener(WatchKey watchKey) {
+        boolean first = true;
         while(true) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
                 Console.test("File Changed");
 
                 File file = ((Path) event.context()).toFile();
-                Console.test("Changed file: " + file.getAbsolutePath());
-                Console.test("Config file:" + new File(configPath).getAbsolutePath());
                 if(file.equals(new File(configPath))){
-                    Console.test("Config File Changed");
-                    tryLoad();
-                    break;
+                    if(fileChanged) {
+                        fileChanged = false;
+                        first = false;
+                    } else if(first) {
+                        Console.info("Config File Changed");
+                        tryLoad();
+                        first = false;
+                    } else {
+                        first = true;
+                    }
                 }
             }
         }
@@ -103,10 +122,13 @@ public class DefaultConfig {
         try {
             String json = new String(Files.readAllBytes(Path.of(configPath)));
             HashMap temp = gson.fromJson(json, HashMap.class);
-            if(temp == null || temp.isEmpty())
+            if(temp == null || temp.isEmpty()) {
                 return false;
-            return true;
-        } catch (IOException e) {
+            }
+            else {
+                return true;
+            }
+        } catch ( Exception e) {
             return false;
         }
     }
@@ -124,6 +146,12 @@ public class DefaultConfig {
         PrintWriter writer = new PrintWriter(configPath);
         writer.print(gson.toJson(getDefaultValue()));
         writer.close();
+        if(shouldExitAfterFileFill())
+            System.exit(0);
+    }
+
+    public boolean shouldExitAfterFileFill() {
+        return false;
     }
 
     private void tryLoad() {
@@ -144,16 +172,18 @@ public class DefaultConfig {
         try {
             save();
         } catch (FileNotFoundException e) {
+            Console.warn("Failed to save file");
+            fileChanged = false;
             e.printStackTrace();
         }
     }
 
     private void save() throws FileNotFoundException {
         Console.info("Saving File");
-        String data = gson.toJson(contents);
+        fileChanged = true;
+        String json = gson.toJson(contents);
         PrintWriter writer = new PrintWriter(configPath);
-        prettifyJSON(data);
-        writer.print(data);
+        writer.print(prettifyJSON(json));
         writer.close();
     }
  
@@ -162,6 +192,13 @@ public class DefaultConfig {
     }
 
     private String prettifyJSON(String json) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = mapper.readValue(json, Object.class);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return json.replaceAll("{", "{\n")
                 .replaceAll("}", "\n}")
                 .replaceAll(",", ",\n");

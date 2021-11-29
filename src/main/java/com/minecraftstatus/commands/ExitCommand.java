@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import com.minecraftstatus.Console;
 import com.minecraftstatus.commands.types.ReactionCommand;
 import com.minecraftstatus.commands.types.ServerCommand;
+import com.minecraftstatus.commands.StatschannelCommand;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -37,7 +38,7 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
     }
 
     public void cancel() {
-        cancel = false;
+        cancel = true;
     }
 
     @Override

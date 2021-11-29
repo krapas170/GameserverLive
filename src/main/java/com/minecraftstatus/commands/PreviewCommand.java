@@ -16,13 +16,11 @@ public class PreviewCommand implements ServerCommand {
     public void performCommand(Member m, TextChannel channel, Message message) {
         message.delete().queue();
         if(m.hasPermission(Permission.ADMINISTRATOR)) {
-            
             String mess = message.getContentRaw().substring(9);
             EmbedBuilder builder = new EmbedBuilder();
             builder.setColor(0xeb974e);
             builder.setDescription(mess);
             channel.sendMessageEmbeds(builder.build()).queue();
-
         } else {
             sendInvalidCommandMessage(channel);
         }

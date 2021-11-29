@@ -9,7 +9,8 @@ import com.minecraftstatus.commands.CreatorinfoCommand;
 import com.minecraftstatus.commands.ExitCommand;
 import com.minecraftstatus.commands.PingCommand;
 import com.minecraftstatus.commands.PreviewCommand;
-import com.minecraftstatus.commands.SetupCommand;
+import com.minecraftstatus.commands.ConfigCommand;
+import com.minecraftstatus.commands.StatschannelCommand;
 import com.minecraftstatus.commands.StopExitCommand;
 import com.minecraftstatus.commands.types.ServerCommand;
 
@@ -34,7 +35,8 @@ public class CommandManager {
         commands.put("info", new CreatorinfoCommand());
         commands.put("preview", new PreviewCommand());
         commands.put("stop", new StopExitCommand());
-        commands.put("setup", new SetupCommand());
+        commands.put("config", new ConfigCommand());
+        commands.put("stats", new StatschannelCommand());
     }
 
     public ServerCommand getCommand(String key) {

@@ -1,9 +1,8 @@
 package com.minecraftstatus;
 
 import java.util.Scanner;
-
+import java.util.HashMap;
 import javax.security.auth.login.LoginException;
-
 import com.minecraftstatus.commands.types.ServerCommand;
 import com.minecraftstatus.configs.ServerConfig;
 import com.minecraftstatus.configs.SettingsConfig;
@@ -12,7 +11,6 @@ import com.minecraftstatus.managers.CommandManager;
 import com.minecraftstatus.managers.LiteSQL;
 import com.minecraftstatus.managers.SQLManager;
 import com.minecraftstatus.managers.StatusManager;
-
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
@@ -32,8 +30,9 @@ public class Main {
     private CommandManager commandManager;
     private StatusManager statusManager;
     private Thread loop;
+    public Object shardMan;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         try {
             new Main();
         } catch (LoginException | IllegalArgumentException e) {
@@ -41,15 +40,16 @@ public class Main {
         }
     }
 
-    public Main() throws LoginException, IllegalArgumentException {
+    public Main() throws LoginException, IllegalArgumentException, InterruptedException {
         INSTANCE = this;
-        LiteSQL.connect();
-		SQLManager.onCreate();
         bot = buildBot();
         System.out.println("\n\n\nBot online!\n\n\n");
         statusManager = new StatusManager(bot, 3, "-w %server guilds | +help", "-l %members members | +help", "-w you.", "-l %voicechannels voice channels | +help", "-l %textchannels text channels | +help");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {shutdown(); System.out.println("Force shutdown!");}));
         startShutdownListener();
+        LiteSQL.connect();
+        Thread.sleep(5000);
+		SQLManager.onCreate();
     }
 
     public static ServerCommand getCommand(String key) {
@@ -101,5 +101,6 @@ public class Main {
         LiteSQL.disconnect();
         System.out.printf("\n\n\n%s[Bot] %sshutdown!%s\n\n\n", Console.RED, Console.RED, Console.RESET);
         CONFIG.close();
+        SERVER.close();
     }
 }
