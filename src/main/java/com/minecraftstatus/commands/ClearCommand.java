@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class ClearCommand implements ServerCommand {
 
     @Override
-    public void performCommand(Member member, TextChannel channel, Message message) {
+    public void performCommand(String[] args, Member member, TextChannel channel, Message message) {
         if(member.hasPermission(Permission.ADMINISTRATOR)) {
             try {
                 delete(channel, message);

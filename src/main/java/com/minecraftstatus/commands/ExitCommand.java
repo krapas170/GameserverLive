@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import com.minecraftstatus.Console;
 import com.minecraftstatus.commands.types.ReactionCommand;
 import com.minecraftstatus.commands.types.ServerCommand;
-import com.minecraftstatus.commands.StatschannelCommand;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -42,7 +41,7 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
     }
 
     @Override
-    public void performCommand(Member member, TextChannel channel, Message message) {
+    public void performCommand(String[] args, Member member, TextChannel channel, Message message) {
         if(running)
             return;
 

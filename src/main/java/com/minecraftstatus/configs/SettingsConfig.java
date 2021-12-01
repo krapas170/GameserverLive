@@ -16,7 +16,7 @@ public class SettingsConfig extends DefaultConfig{
     @Override
     protected HashMap<String, String> getDefaultValue(HashMap<String, String> map) {
         map.put("token", "Put your token here");
-        map.put("prefix", "!");
+        map.put("prefix", "@GameserverLive ");
         map.put("min_exit_time", "10");
         map.put("exit_time", "10");
 

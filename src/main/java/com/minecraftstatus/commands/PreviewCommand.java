@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class PreviewCommand implements ServerCommand {
 
     @Override
-    public void performCommand(Member m, TextChannel channel, Message message) {
+    public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
         message.delete().queue();
         if(m.hasPermission(Permission.ADMINISTRATOR)) {
             String mess = message.getContentRaw().substring(9);

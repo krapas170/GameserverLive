@@ -13,8 +13,10 @@ public class LiteSQL {
 	private static Connection conn;
 	private static Statement stmt;
 	
-	public static void connect() {
+	public static void connect() throws InterruptedException {
 		conn = null;
+
+		Thread.sleep(5000);
 		
 		try {
 			File file = new File("datenbank.db");

@@ -13,8 +13,6 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.HashMap;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.minecraftstatus.Console;
@@ -121,7 +119,7 @@ public class DefaultConfig {
     private boolean isFileFormCorrect() {
         try {
             String json = new String(Files.readAllBytes(Path.of(configPath)));
-            HashMap temp = gson.fromJson(json, HashMap.class);
+            HashMap<String, String> temp = gson.fromJson(json, HashMap.class);
             if(temp == null || temp.isEmpty()) {
                 return false;
             }

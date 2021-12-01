@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class MCQueryCommand implements ServerCommand {
 
     @Override
-    public void performCommand(Member m, TextChannel channel, Message message) {
+    public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
         try {
             //queryResult = getMineCraftServerStatus();
             String query = new QueryStatus.Builder("mc.hypixel.net")

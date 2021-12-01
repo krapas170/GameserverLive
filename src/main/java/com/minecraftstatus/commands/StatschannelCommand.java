@@ -27,10 +27,9 @@ import net.dv8tion.jda.internal.requests.restaction.PermissionOverrideActionImpl
 public class StatschannelCommand implements ServerCommand {
 
 	@Override
-	public void performCommand(Member m, TextChannel channel, Message message) {
+	public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
 		
 		if(m.hasPermission(Permission.ADMINISTRATOR)) {
-			String[] args = message.getContentDisplay().split(" ");
 		
 				Guild guild = channel.getGuild();
 				ResultSet set = LiteSQL.onQuery("SELECT * FROM statchannels WHERE guildid = " + guild.getIdLong());
@@ -146,7 +145,7 @@ public class StatschannelCommand implements ServerCommand {
 	}
 	
 	public static void checkStats() {
-		((JDA) Main.INSTANCE.shardMan).getGuilds().forEach(guild -> {
+		((JDA) Main.shardMan).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			
 			try {
@@ -161,7 +160,7 @@ public class StatschannelCommand implements ServerCommand {
 	}
 	
 	public static void onStartUP() {
-		((JDA) Main.INSTANCE.shardMan).getGuilds().forEach(guild -> {
+		((JDA) Main.shardMan).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			
 			try {
@@ -182,7 +181,7 @@ public class StatschannelCommand implements ServerCommand {
 	}
 	
 	public static void onShutdown() {
-		((JDA) Main.INSTANCE.shardMan).getGuilds().forEach(guild -> {
+		((JDA) Main.shardMan).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			
 			try {

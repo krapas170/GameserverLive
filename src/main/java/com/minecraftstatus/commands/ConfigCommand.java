@@ -22,15 +22,13 @@ public class ConfigCommand implements ServerCommand {
     public final static DefaultConfig CONFIG = new DefaultConfig("config.json");
 
     @Override
-    public void performCommand(Member m, TextChannel channel, Message message) {
+    public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
         
         if(m.hasPermission(Permission.ADMINISTRATOR)) {
-            String mess = message.getContentRaw();
-            String[] messageSplit = mess.split(" ");
-            if(messageSplit.length == 2) {
-                printValue(channel, messageSplit[1]);
-            } else if (messageSplit.length == 3) {
-                writeValue(channel, messageSplit[1], messageSplit[2]);
+            if(args.length == 2) {
+                printValue(channel, args[1]);
+            } else if (args.length == 3) {
+                writeValue(channel, args[1], args[2]);
             } else {
                 channel.sendMessage("Wrong Syntax!\nWrite setup [key] to get the value.\nWrite setup [key] [value] to set the value.");
             }

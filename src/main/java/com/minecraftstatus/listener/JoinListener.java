@@ -1,5 +1,7 @@
 package com.minecraftstatus.listener;
 
+import com.minecraftstatus.Console;
+
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
@@ -10,6 +12,7 @@ public class JoinListener extends ListenerAdapter {
 
 	@Override
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
+		Console.test("starte JoinListener");
 		Member member = event.getMember();
 		TextChannel channel;
 				

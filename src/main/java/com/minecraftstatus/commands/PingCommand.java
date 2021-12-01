@@ -11,7 +11,7 @@ public class PingCommand implements ServerCommand{
     public static final String emoji = "🏓";
 
     @Override
-    public void performCommand(Member m, TextChannel channel, Message message) {
+    public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
         long gatewayping = channel.getJDA().getGatewayPing();
 
         channel.getJDA().getRestPing().queue((time) ->
