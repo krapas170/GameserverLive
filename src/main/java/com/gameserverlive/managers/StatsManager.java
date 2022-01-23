@@ -103,19 +103,12 @@ public class StatsManager extends TimerTask {
 	}
 
     public static void fillCategory(Category category) throws InterruptedException {
-		Thread.sleep(500);
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-		Thread.sleep(500);
 		SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.YYYY");
-		Thread.sleep(500);
 		category.createVoiceChannel("🕗 Uhrzeit: " + df.format(Calendar.getInstance().getTime()) + "Uhr").queue();
-		Thread.sleep(500);
 		category.createVoiceChannel("📅 Datum: " + df2.format(Calendar.getInstance().getTime())).queue();
-		Thread.sleep(500);
 		List<Member> members = category.getGuild().getMembers();
-		Thread.sleep(500);
 		category.createVoiceChannel("📈 Server Mitglieder: " + members.size()).queue();
-		Thread.sleep(500);
 		int online = 0;
 		for(Member memb : members) {
 			if(memb.getOnlineStatus() != OnlineStatus.ONLINE) {
@@ -124,11 +117,8 @@ public class StatsManager extends TimerTask {
 				}
 			}
 		}
-		Thread.sleep(500);
 		category.createVoiceChannel("🔘 Online User: " + online).queue();
-		Thread.sleep(500);
 		category.createVoiceChannel("✅ BOT ONLINE").queue();
-		Thread.sleep(500);
 		PermissionOverride override = new PermissionOverrideActionImpl(category.getJDA(), category, category.getGuild().getPublicRole()).complete();
 		//System.out.println("OVerride: " + (override == null ? "NULL" : override.toString()));
 		category.getManager().putPermissionOverride(override.getRole(), null, EnumSet.of(Permission.VOICE_CONNECT)).queue();
