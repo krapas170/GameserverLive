@@ -48,7 +48,7 @@ public class Main {
 
         bot = buildBot();
         System.out.println("\n\n\nBot online!\n\n\n");
-        statusManager = new StatusManager(bot, 3, "-w %server guilds | +help", "-l %members members | +help", "-w you.", "-l %voicechannels voice channels | +help", "-l %textchannels text channels | +help");
+        statusManager = new StatusManager(bot, 20, "-w %server guilds | +help", "-l %members members | +help", "-w you.", "-l %voicechannels voice channels | +help", "-l %textchannels text channels | +help");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {try {
             shutdown();
         } catch (InterruptedException e) {
@@ -59,7 +59,7 @@ public class Main {
         LiteSQL.connect();
 		SQLManager.onCreate();
         Thread.sleep(5000);
-        new StatsManager(bot, 10);
+        new StatsManager(bot, 30);
     }
 
     public static ServerCommand getCommand(String key) {
