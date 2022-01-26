@@ -34,7 +34,6 @@ public class Main {
     private static CommandManager commandManager;
     private static StatusManager statusManager;
     private static Thread loop;
-    public static Object shardMan;
 
     public static void main(String[] args) throws InterruptedException {
         try {
@@ -48,7 +47,7 @@ public class Main {
 
         bot = buildBot();
         System.out.println("\n\n\nBot online!\n\n\n");
-        statusManager = new StatusManager(bot, 20, "-w %server guilds | +help", "-l %members members | +help", "-w you.", "-l %voicechannels voice channels | +help", "-l %textchannels text channels | +help");
+        statusManager = new StatusManager(bot, 20, "-w %server guilds | " + CONFIG.getString("prefix") + "help", "-l %members members | " + CONFIG.getString("prefix") + "help", "-w you.", "-l %voicechannels voice channels | " + CONFIG.getString("prefix") + "help", "-l %textchannels text channels | " + CONFIG.getString("prefix") + "help");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {try {
             shutdown();
         } catch (InterruptedException e) {
@@ -59,7 +58,7 @@ public class Main {
         LiteSQL.connect();
 		SQLManager.onCreate();
         Thread.sleep(5000);
-        new StatsManager(bot, 30);
+        new StatsManager(bot, 10);
     }
 
     public static ServerCommand getCommand(String key) {

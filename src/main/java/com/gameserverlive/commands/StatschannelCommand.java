@@ -144,7 +144,7 @@ public class StatschannelCommand implements ServerCommand {
 	}
 	
 	public static void checkStats() {
-		((JDA) Main.shardMan).getGuilds().forEach(guild -> {
+		((JDA) Main.bot).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			
 			try {
@@ -159,7 +159,7 @@ public class StatschannelCommand implements ServerCommand {
 	}
 	
 	public static void onStartUP() {
-		((JDA) Main.shardMan).getGuilds().forEach(guild -> {
+		((JDA) Main.bot).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			
 			try {
@@ -180,7 +180,7 @@ public class StatschannelCommand implements ServerCommand {
 	}
 	
 	public static void onShutdown() {
-		((JDA) Main.shardMan).getGuilds().forEach(guild -> {
+		((JDA) Main.bot).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			
 			try {

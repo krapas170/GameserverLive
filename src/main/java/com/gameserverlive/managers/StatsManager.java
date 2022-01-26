@@ -26,7 +26,7 @@ import net.dv8tion.jda.internal.requests.restaction.PermissionOverrideActionImpl
 public class StatsManager extends TimerTask {
 
     private Timer timer;
-    private ShardManager bot;
+    public ShardManager bot;
     private int time;
 
     public StatsManager(ShardManager bot, int time) {
@@ -49,7 +49,7 @@ public class StatsManager extends TimerTask {
 	public void run() {
 		for(Guild guild : bot.getGuilds()) {
 			try {
-				onStartUP();
+				//onStartUP();
 				Thread.sleep(500);
 				updateStats(guild);
 			} catch (SQLException | InterruptedException e) {
@@ -153,7 +153,7 @@ public class StatsManager extends TimerTask {
 	}
 	
 	public static void checkStats() {
-		((ShardManager) Main.shardMan).getGuilds().forEach(guild -> {
+		((ShardManager) Main.bot).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			try {
 				if(set.next()) {
@@ -167,7 +167,7 @@ public class StatsManager extends TimerTask {
 	}
 	
 	public static void onStartUP() {
-		((ShardManager) Main.shardMan).getGuilds().forEach(guild -> {
+		Main.bot.getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			try {
 				if(set.next()) {
@@ -185,7 +185,7 @@ public class StatsManager extends TimerTask {
 	}
 	
 	public static void onShutdown() {
-		((ShardManager) Main.shardMan).getGuilds().forEach(guild -> {
+		((ShardManager) Main.bot).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			try {
 				if(set.next()) {
