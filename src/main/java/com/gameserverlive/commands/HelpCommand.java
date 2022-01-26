@@ -35,7 +35,8 @@ public class HelpCommand implements ServerCommand {
     private void ownerCommands(String[] args, Member m, TextChannel channel, Message message) {
         String title = "This commands can you execute";
         String description = 
-            "**🛠 __Admin Befehle__**\n" +
+            "**🛠 __Admin Befehle__**\n\n" +
+            "**Prefix:** " + CONFIG.getString("prefix") + ("\n") +
             //Admin
             "**" + CONFIG.getString("prefix") + "exit:** shutdown the Bot\n" +
             "**" + CONFIG.getString("prefix") + "abort:** abort the shutdown\n" +
