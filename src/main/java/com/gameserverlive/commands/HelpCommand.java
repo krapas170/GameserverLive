@@ -38,22 +38,18 @@ public class HelpCommand implements ServerCommand {
             "**🛠 __Admin Befehle__**\n\n" +
             "**Prefix:** " + CONFIG.getString("prefix") + ("\n") +
             //Admin
-            "**" + CONFIG.getString("prefix") + "exit:** shutdown the Bot\n" +
-            "**" + CONFIG.getString("prefix") + "abort:** abort the shutdown\n" +
-            "**" + CONFIG.getString("prefix") + "config:** set the config for the bot\n" +
+            "**exit:** shutdown the Bot\n" +
+            "**abort:** abort the shutdown\n" +
+            "**config:** set the config for the bot\n" +
             //Moderator
-            "**" + CONFIG.getString("prefix") + "clear <amount>:** clear messages\n" +
-            "**" + CONFIG.getString("prefix") + "preview <message>:** send a message with the bot\n" +
-            "**" + CONFIG.getString("prefix") + "stats:** create or update the statistics\n" +
+            "**clear <amount>:** clear messages\n" +
+            "**preview <message>:** send a message with the bot\n" +
+            "**stats:** create or update the statistics\n" +
             //User
-            "**" + CONFIG.getString("prefix") + "ping:** show the ping of the bot\n" +
-            "**" + CONFIG.getString("prefix") + "id:** show your Discord-ID\n" +
-            "**" + CONFIG.getString("prefix") + "info:** show the info about the bot\n" +
-            "**" + CONFIG.getString("prefix") + "play <link/search query>:** play an audio from youtube\n" +
-            "**" + CONFIG.getString("prefix") + "stop:** stops the music and disconnect the bot from the voice channel\n" +
-            "**" + CONFIG.getString("prefix") + "track:** displays the currently played track\n" +
-            "**" + CONFIG.getString("prefix") + "shuffle:** enabled/disabled shuffle\n" + 
-            "**" + CONFIG.getString("prefix") + "invite:** get an invite link for the bot\n";
+            "**ping:** show the ping of the bot\n" +
+            "**id:** show your Discord-ID\n" +
+            "**info:** show the info about the bot\n" +
+            "**invite:** get an invite link for the bot\n";
         EmbedBuilder builder = new EmbedBuilder();
         EmbedMessage.run(title, description, channel);
         channel.sendMessageEmbeds(builder.build()).queue();
@@ -63,19 +59,16 @@ public class HelpCommand implements ServerCommand {
         String title = "This commands can you execute";
         String description = 
             "**🛠 __Moderator Befehle__**\n" +
+            "**Prefix:** " + CONFIG.getString("prefix") + ("\n") +
             //Moderator
-            "**" + CONFIG.getString("prefix") + "clear <amount>:** clear messages\n" +
-            "**" + CONFIG.getString("prefix") + "preview <message>:** send a message with the bot\n" +
-            "**" + CONFIG.getString("prefix") + "stats:** create or update the statistics\n" +
+            "**clear <amount>:** clear messages\n" +
+            "**preview <message>:** send a message with the bot\n" +
+            "**stats:** create or update the statistics\n" +
             //User
-            "**" + CONFIG.getString("prefix") + "ping:** show the ping of the bot\n" +
-            "**" + CONFIG.getString("prefix") + "id:** show your Discord-ID\n" +
-            "**" + CONFIG.getString("prefix") + "info:** show the info about the bot\n" +
-            "**" + CONFIG.getString("prefix") + "play <link/search query>:** play an audio from youtube\n" +
-            "**" + CONFIG.getString("prefix") + "stop:** stops the music and disconnect the bot from the voice channel\n" +
-            "**" + CONFIG.getString("prefix") + "track:** displays the currently played track\n" +
-            "**" + CONFIG.getString("prefix") + "shuffle:** enabled/disabled shuffle\n" +
-            "**" + CONFIG.getString("prefix") + "invite:** get an invite link for the bot\n";
+            "**ping:** show the ping of the bot\n" +
+            "**id:** show your Discord-ID\n" +
+            "**info:** show the info about the bot\n" +
+            "**invite:** get an invite link for the bot\n";
         EmbedBuilder builder = new EmbedBuilder();
         EmbedMessage.run(title, description, channel);
         channel.sendMessageEmbeds(builder.build()).queue();
@@ -85,15 +78,12 @@ public class HelpCommand implements ServerCommand {
         String title = "This commands can you execute";
         String description = 
             "**🛠 __User Befehle__**\n" +
+            "**Prefix:** " + CONFIG.getString("prefix") + ("\n") +
             //User
-            "**" + CONFIG.getString("prefix") + "ping:** show the ping of the bot\n" +
-            "**" + CONFIG.getString("prefix") + "id:** show your Discord-ID\n" +
-            "**" + CONFIG.getString("prefix") + "info:** show the info about the bot\n" +
-            "**" + CONFIG.getString("prefix") + "play <link/search query>:** play an audio from youtube\n" +
-            "**" + CONFIG.getString("prefix") + "stop:** stops the music and disconnect the bot from the voice channel\n" +
-            "**" + CONFIG.getString("prefix") + "track:** displays the currently played track\n" +
-            "**" + CONFIG.getString("prefix") + "shuffle:** enabled/disabled shuffle\n" +
-            "**" + CONFIG.getString("prefix") + "invite:** get an invite link for the bot\n";
+            "**ping:** show the ping of the bot\n" +
+            "**id:** show your Discord-ID\n" +
+            "**info:** show the info about the bot\n" +
+            "**invite:** get an invite link for the bot\n";
         EmbedBuilder builder = new EmbedBuilder();
         EmbedMessage.run(title, description, channel);
         channel.sendMessageEmbeds(builder.build()).queue();
