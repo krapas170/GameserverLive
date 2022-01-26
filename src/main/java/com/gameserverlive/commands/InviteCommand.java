@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class InviteCommand implements ServerCommand {
 
     public String title = "Thanks for being interesting in our bot!";
-    public String description = "Here is the long-awaited link to use the bot on other servers.\n\n Click this Link: https://gameserverlive.xyz/invite";
+    public String description = "Here is the long-awaited link to use the bot on other servers.\n\n Click this Link: https://gameserverlive.xyz/invite (Link is functioning soon)";
 
     EmbedBuilder builder = new EmbedBuilder();
 
