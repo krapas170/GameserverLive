@@ -2,3 +2,4 @@ config.json
 datenbank.db
 server.json
 target/
+gameserverlive.jar
