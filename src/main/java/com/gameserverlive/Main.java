@@ -11,6 +11,7 @@ import com.gameserverlive.listener.CommandListener;
 import com.gameserverlive.listener.JoinListener;
 import com.gameserverlive.listener.VoiceListener;
 import com.gameserverlive.managers.CommandManager;
+import com.gameserverlive.managers.GameServerManager;
 import com.gameserverlive.managers.LiteSQL;
 import com.gameserverlive.managers.SQLManager;
 import com.gameserverlive.managers.StatsManager;
@@ -59,6 +60,7 @@ public class Main {
 		SQLManager.onCreate();
         Thread.sleep(5000);
         new StatsManager(bot, 10);
+        new GameServerManager(bot, 300);
     }
 
     public static ServerCommand getCommand(String key) {
