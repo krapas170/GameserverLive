@@ -1,30 +1,18 @@
 package com.gameserverlive.commands;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.EnumSet;
-import java.util.List;
 
-import com.gameserverlive.Main;
 import com.gameserverlive.commands.types.EmbedMessage;
 import com.gameserverlive.commands.types.ServerCommand;
 import com.gameserverlive.managers.LiteSQL;
+import com.gameserverlive.query.MCQuery;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.PermissionOverride;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.internal.requests.restaction.PermissionOverrideActionImpl;
 
 public class GameServerStatus implements ServerCommand {
 
@@ -54,5 +42,28 @@ public class GameServerStatus implements ServerCommand {
             EmbedMessage.run(title, description, channel);
             channel.sendMessageEmbeds(builder.build()).queue();
         }
+
+		queryabfragen();
     }
+
+	public static void queryabfragen() {
+		MCQuery query = new MCQuery();
+		String status;
+		
+		//basic status
+		status = query.basicStat().toString();
+		System.out.println(status);
+		
+		//full status
+		status = query.fullStat().toString();
+		System.out.println(status);
+		
+		//getting the result as a json string
+		status = query.basicStat().asJSON();
+		System.out.println(status);
+		
+		//getting full status as a json string
+		status = query.fullStat().asJSON();
+		System.out.println(status);
+	}
 }
