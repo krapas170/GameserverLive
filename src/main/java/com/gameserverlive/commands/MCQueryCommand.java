@@ -3,6 +3,7 @@ package com.gameserverlive.commands;
 import java.sql.ResultSet;
 import java.util.List;
 
+import com.gameserverlive.Console;
 import com.gameserverlive.commands.types.EmbedMessage;
 import com.gameserverlive.commands.types.ServerCommand;
 import com.gameserverlive.managers.LiteSQL;
@@ -20,11 +21,12 @@ public class MCQueryCommand implements ServerCommand {
 
     @Override
     public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
-        try {
-            ResultSet address = LiteSQL
+        ResultSet address = LiteSQL
                     .onQuery("SELECT ipaddress FROM gameserver WHERE textchannel = " + channel.getIdLong());
+        String IPAdresse = "ne.arsch.de:25565";
+        try {
             System.out.println(address);
-            String query = new QueryStatus.Builder("mc.hypixel.net")
+            String query = new QueryStatus.Builder(IPAdresse)
                     .setProtocol(Protocol.TCP)
                     .build()
                     .getStatus()
@@ -53,6 +55,13 @@ public class MCQueryCommand implements ServerCommand {
         } catch (QueryException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            Console.warn("IP-Adresse " + IPAdresse + " ist nicht verfügbar!");
+
+            String title = "Can not reach server";
+            String description = "The server with the IP address **`" + IPAdresse + "`** does not exist, is offline or does not have query enabled.";
+            EmbedBuilder builder = new EmbedBuilder();
+            EmbedMessage.run(title, description, channel);
+            channel.sendMessageEmbeds(builder.build()).queue();
         }
     }
 

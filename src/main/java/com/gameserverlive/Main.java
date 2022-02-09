@@ -65,7 +65,7 @@ public class Main {
         SQLManager.onCreate();
         Thread.sleep(5000);
         new StatsManager(bot, 10);
-        // new GameServerManager(bot, 300);
+        new GameServerManager(bot, 300);
     }
 
     public static ServerCommand getCommand(String key) {
@@ -116,6 +116,7 @@ public class Main {
     private static void shutdown() throws InterruptedException {
         // onShutdown();
         StatsManager.onShutdown();
+        GameServerManager.onShutdown();
         Thread.sleep(1000);
         statusManager.stopTimer();
         bot.setStatus(OnlineStatus.OFFLINE);
