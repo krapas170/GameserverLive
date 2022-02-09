@@ -8,7 +8,6 @@ import com.tekgator.queryminecraftserver.api.QueryStatus;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed.Field;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 
@@ -23,6 +22,10 @@ public class MCQueryCommand implements ServerCommand {
                                             .build()
                                             .getStatus()
                                             .toJson();
+
+            System.out.println(query);
+
+
             String title = "Status of Minecraft Server";
             String description = null;
             EmbedBuilder builder = new EmbedBuilder();

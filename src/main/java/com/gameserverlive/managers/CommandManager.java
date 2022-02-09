@@ -10,6 +10,7 @@ import com.gameserverlive.commands.CreatorinfoCommand;
 import com.gameserverlive.commands.ExitCommand;
 import com.gameserverlive.commands.HelpCommand;
 import com.gameserverlive.commands.InviteCommand;
+import com.gameserverlive.commands.MCQueryCommand;
 import com.gameserverlive.commands.PingCommand;
 import com.gameserverlive.commands.PreviewCommand;
 import com.gameserverlive.commands.StatschannelCommand;
@@ -30,7 +31,7 @@ public class CommandManager {
         commands.put("clear", new ClearCommand());
         commands.put("exit", new ExitCommand());
         commands.put("help", new HelpCommand());
-        commands.put("mc", new ConstructCommand());
+        commands.put("mc", new MCQueryCommand());
         commands.put("ping", new PingCommand());
         commands.put("id", new ClientIDCommand());
         commands.put("info", new CreatorinfoCommand());
