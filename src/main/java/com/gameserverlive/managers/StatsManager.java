@@ -142,7 +142,7 @@ public class StatsManager extends TimerTask {
 			List<GuildChannel> channels = cat.getChannels();
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 			SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.YYYY");
-			channels.get(0).getManager().setName("🕗 Uhrzeit: " + df.format(Calendar.getInstance().getTime()) + "Uhr")
+			channels.get(0).getManager().setName("🕗 Uhrzeit: " + df.format(Calendar.getInstance().getTime()) + " Uhr")
 					.queue();
 			channels.get(1).getManager().setName("📅 Datum: " + df2.format(Calendar.getInstance().getTime())).queue();
 			List<Member> members = cat.getGuild().getMembers();
