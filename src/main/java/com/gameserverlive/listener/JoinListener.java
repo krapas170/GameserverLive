@@ -15,22 +15,20 @@ public class JoinListener extends ListenerAdapter {
 		Console.test("starte JoinListener");
 		Member member = event.getMember();
 		TextChannel channel;
-				
-				
-		if((channel = event.getGuild().getDefaultChannel()) != null) {
+
+		if ((channel = event.getGuild().getDefaultChannel()) != null) {
 			channel.sendMessage("Willkommen auf unserem super coolen Discord " + member.getAsMention()).queue();
 		}
 	}
-	
+
 	@Override
 	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
 		Member member = event.getMember();
 		TextChannel channel;
-				
-				
-		if((channel = event.getGuild().getDefaultChannel()) != null) {
+
+		if ((channel = event.getGuild().getDefaultChannel()) != null) {
 			channel.sendMessage("Bis zum nächsten mal " + member.getAsMention()).queue();
 		}
 	}
-	
+
 }

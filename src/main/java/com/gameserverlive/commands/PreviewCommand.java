@@ -16,7 +16,7 @@ public class PreviewCommand implements ServerCommand {
     @Override
     public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
         message.delete().queue();
-        if(m.hasPermission(Permission.ADMINISTRATOR)) {
+        if (m.hasPermission(Permission.ADMINISTRATOR)) {
             String mess = message.getContentRaw().substring(9);
             String title = null;
             String description = mess;
@@ -29,6 +29,7 @@ public class PreviewCommand implements ServerCommand {
     }
 
     private void sendInvalidCommandMessage(TextChannel channel) {
-        channel.sendMessage("```You don't have high enough permissions to execute this command.\n\nBitch!```").complete().delete().queueAfter(10, TimeUnit.SECONDS);
+        channel.sendMessage("```You don't have high enough permissions to execute this command.\n\nBitch!```")
+                .complete().delete().queueAfter(10, TimeUnit.SECONDS);
     }
 }

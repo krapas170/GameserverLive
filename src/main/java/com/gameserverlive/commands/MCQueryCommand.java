@@ -16,18 +16,19 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-
 public class MCQueryCommand implements ServerCommand {
 
     @Override
     public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
         try {
-            ResultSet address = LiteSQL.onQuery("SELECT ipadress FROM gameserver WHERE textchannel = " + channel.getIdLong());
+            ResultSet address = LiteSQL
+                    .onQuery("SELECT ipaddress FROM gameserver WHERE textchannel = " + channel.getIdLong());
+            System.out.println(address);
             String query = new QueryStatus.Builder("mc.hypixel.net")
-                                            .setProtocol(Protocol.TCP)
-                                            .build()
-                                            .getStatus()
-                                            .toJson();
+                    .setProtocol(Protocol.TCP)
+                    .build()
+                    .getStatus()
+                    .toJson();
 
             String hostname = JsonPath.read(query, "$.server.hostname");
             String ipaddress = JsonPath.read(query, "$.server.ipaddress");
@@ -38,17 +39,16 @@ public class MCQueryCommand implements ServerCommand {
             String beschreibung = JsonPath.read(query, "$.description");
 
             String title = "Status of Minecraft Server";
-            String description =    "Hostname: **`" + hostname +
-                                    "`**\nIP Adresse: **`" + ipaddress +
-                                    "`**\nPort: **`" + port +
-                                    "`**\nLatenz: **`" + latency + "ms" +
-                                    "`**\nPlayer online: **`" + playeronline +
-                                    "`**\nMaximale Spieler: **`" + playermax +
-                                    "`**\nBeschreibung: **`" + beschreibung + "`**";
+            String description = "Hostname: **`" + hostname +
+                    "`**\nIP Adresse: **`" + ipaddress +
+                    "`**\nPort: **`" + port +
+                    "`**\nLatenz: **`" + latency + "ms" +
+                    "`**\nPlayer online: **`" + playeronline +
+                    "`**\nMaximale Spieler: **`" + playermax +
+                    "`**\nBeschreibung: **`" + beschreibung + "`**";
             EmbedBuilder builder = new EmbedBuilder();
             EmbedMessage.run(title, description, channel);
             channel.sendMessageEmbeds(builder.build()).queue();
-            
 
         } catch (QueryException e) {
             // TODO Auto-generated catch block
@@ -60,4 +60,3 @@ public class MCQueryCommand implements ServerCommand {
         return null;
     }
 }
-

@@ -15,7 +15,8 @@ public class EmbedMessage {
     public static void run(String title, String description, TextChannel channel) {
 
         builder.setAuthor("GameserverLive");
-        builder.setFooter("GameserverLive by pasi0104lp#9500 and cncptpr#0955", "https://pasi0104lp.de/wp-content/uploads/2021/11/server.png");
+        builder.setFooter("GameserverLive by pasi0104lp#9500 and cncptpr#0955",
+                "https://pasi0104lp.de/wp-content/uploads/2021/11/server.png");
 
         builder.setTitle(title);
         builder.setDescription(description);

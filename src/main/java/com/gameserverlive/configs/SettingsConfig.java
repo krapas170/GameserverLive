@@ -4,14 +4,14 @@ import java.util.HashMap;
 
 import com.gameserverlive.Console;
 
-public class SettingsConfig extends DefaultConfig{
+public class SettingsConfig extends DefaultConfig {
 
     public SettingsConfig() {
         super("config.json");
         Console.info("config.json geladen");
     }
 
-    //public final static DefaultConfig CONFIG = new DefaultConfig("config.json");
+    // public final static DefaultConfig CONFIG = new DefaultConfig("config.json");
 
     @Override
     protected HashMap<String, String> getDefaultValue(HashMap<String, String> map) {
@@ -22,7 +22,7 @@ public class SettingsConfig extends DefaultConfig{
 
         Console.info("Created Config File");
         Console.info("Please put the %red%Token%reset% into the %red%config file%reset%!");
-        
+
         return map;
     }
 

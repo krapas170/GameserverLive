@@ -25,8 +25,8 @@ public class DefaultConfig {
     private boolean fileChanged = false;
 
     /*
-    *   Create a confic wrapper for the file in the path
-    */
+     * Create a confic wrapper for the file in the path
+     */
     public DefaultConfig(String path) {
         configPath = path;
         contents = new HashMap<>();
@@ -36,30 +36,30 @@ public class DefaultConfig {
     }
 
     /*
-    *   Create a confic wrapper for the file
-    */
+     * Create a confic wrapper for the file
+     */
     public DefaultConfig(File file) {
         this(file.getAbsolutePath());
     }
 
     /*
-    *   Get the config-value to the specified key
-    */
+     * Get the config-value to the specified key
+     */
     public Object get(String key) {
         return contents.get(key);
     }
 
     /*
-    *   Get the config-value as string to the specified key
-    *   Make sure that the value is a String, else the is an Error
-    */
+     * Get the config-value as string to the specified key
+     * Make sure that the value is a String, else the is an Error
+     */
     public String getString(String key) {
         return (String) get(key);
     }
 
     /*
-    *   Set the config-value for the specific key
-    */
+     * Set the config-value for the specific key
+     */
     public void set(String key, Object value) {
         contents.put(key, value);
         trySave();
@@ -76,16 +76,16 @@ public class DefaultConfig {
 
     private void runWatchListener(WatchKey watchKey) {
         boolean first = true;
-        while(true) {
+        while (true) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
                 Console.test("File Changed");
 
                 File file = ((Path) event.context()).toFile();
-                if(file.equals(new File(configPath))){
-                    if(fileChanged) {
+                if (file.equals(new File(configPath))) {
+                    if (fileChanged) {
                         fileChanged = false;
                         first = false;
-                    } else if(first) {
+                    } else if (first) {
                         Console.info("Config File Changed");
                         tryLoad();
                         first = false;
@@ -108,7 +108,7 @@ public class DefaultConfig {
     }
 
     private void checkFile() {
-        if(!new File(configPath).exists()) {
+        if (!new File(configPath).exists()) {
             createFile();
         } else if (!isFileFormCorrect()) {
             new File(configPath).delete();
@@ -120,13 +120,12 @@ public class DefaultConfig {
         try {
             String json = new String(Files.readAllBytes(Path.of(configPath)));
             HashMap<String, String> temp = gson.fromJson(json, HashMap.class);
-            if(temp == null || temp.isEmpty()) {
+            if (temp == null || temp.isEmpty()) {
                 return false;
-            }
-            else {
+            } else {
                 return true;
             }
-        } catch ( Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -144,7 +143,7 @@ public class DefaultConfig {
         PrintWriter writer = new PrintWriter(configPath);
         writer.print(gson.toJson(getDefaultValue()));
         writer.close();
-        if(shouldExitAfterFileFill())
+        if (shouldExitAfterFileFill())
             System.exit(0);
     }
 
@@ -184,7 +183,7 @@ public class DefaultConfig {
         writer.print(prettifyJSON(json));
         writer.close();
     }
- 
+
     public void close() {
         trySave();
     }
@@ -209,5 +208,5 @@ public class DefaultConfig {
     protected HashMap<String, String> getDefaultValue(HashMap<String, String> map) {
         return map;
     }
-    
+
 }

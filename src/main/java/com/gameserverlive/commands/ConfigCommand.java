@@ -24,14 +24,15 @@ public class ConfigCommand implements ServerCommand {
 
     @Override
     public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
-        
-        if(m.hasPermission(Permission.ADMINISTRATOR)) {
-            if(args.length == 2) {
+
+        if (m.hasPermission(Permission.ADMINISTRATOR)) {
+            if (args.length == 2) {
                 printValue(channel, args[1]);
             } else if (args.length == 3) {
                 writeValue(channel, args[1], args[2]);
             } else {
-                channel.sendMessage("Wrong Syntax!\nWrite setup [key] to get the value.\nWrite setup [key] [value] to set the value.");
+                channel.sendMessage(
+                        "Wrong Syntax!\nWrite setup [key] to get the value.\nWrite setup [key] [value] to set the value.");
             }
 
         } else {
@@ -57,6 +58,7 @@ public class ConfigCommand implements ServerCommand {
     }
 
     private void sendInvalidCommandMessage(TextChannel channel) {
-        channel.sendMessage("```You don't have high enough permissions to execute this command.\n\nBitch!```").complete().delete().queueAfter(10, TimeUnit.SECONDS);
+        channel.sendMessage("```You don't have high enough permissions to execute this command.\n\nBitch!```")
+                .complete().delete().queueAfter(10, TimeUnit.SECONDS);
     }
 }

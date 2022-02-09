@@ -25,31 +25,31 @@ import net.dv8tion.jda.internal.requests.restaction.PermissionOverrideActionImpl
 
 public class StatsManager extends TimerTask {
 
-    private Timer timer;
-    public ShardManager bot;
-    private int time;
+	private Timer timer;
+	public ShardManager bot;
+	private int time;
 
-    public StatsManager(ShardManager bot, int time) {
-        this.bot = bot;
-        this.time = time;
-        startTimer();
+	public StatsManager(ShardManager bot, int time) {
+		this.bot = bot;
+		this.time = time;
+		startTimer();
 		run();
-    }
+	}
 
-    public void startTimer() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(this, 0, time * 1000);
-    }
+	public void startTimer() {
+		timer = new Timer();
+		timer.scheduleAtFixedRate(this, 0, time * 1000);
+	}
 
-    public void stopTimer() {
-        timer.cancel();
-    }
+	public void stopTimer() {
+		timer.cancel();
+	}
 
 	@Override
 	public void run() {
-		for(Guild guild : bot.getGuilds()) {
+		for (Guild guild : bot.getGuilds()) {
 			try {
-				//onStartUP();
+				// onStartUP();
 				Thread.sleep(500);
 				updateStats(guild);
 			} catch (SQLException | InterruptedException e) {
@@ -64,8 +64,8 @@ public class StatsManager extends TimerTask {
 
 	public static void updateStats(Guild guild) throws SQLException, InterruptedException {
 		ResultSet result = LiteSQL.onQuery("SELECT * FROM statchannels WHERE guildid = " + guild.getIdLong());
-		
-		if(!result.next())
+
+		if (!result.next())
 			return;
 
 		long categoryid = result.getLong("categoryid");
@@ -73,9 +73,9 @@ public class StatsManager extends TimerTask {
 
 		updateCategory(category);
 
-		//deleteChannels(category);
-		//fillCategory(category);
-		
+		// deleteChannels(category);
+		// fillCategory(category);
+
 	}
 
 	private static void deleteCategory(Guild guild) throws SQLException {
@@ -96,13 +96,16 @@ public class StatsManager extends TimerTask {
 	public static void createCategory(Guild guild) throws InterruptedException {
 		Category category = guild.createCategory("Statistiken").complete();
 		category.getManager().setPosition(-1).queue();
-		PermissionOverride override = new PermissionOverrideActionImpl(category.getJDA(), category, category.getGuild().getPublicRole()).complete();
-		category.getManager().putPermissionOverride(override.getRole(), null, EnumSet.of(Permission.VOICE_CONNECT)).queue();
-		LiteSQL.onUpdate("INSERT INTO statchannels(guildid, categoryid) VALUES(" + guild.getIdLong() + ", " + category.getIdLong() + ")");
+		PermissionOverride override = new PermissionOverrideActionImpl(category.getJDA(), category,
+				category.getGuild().getPublicRole()).complete();
+		category.getManager().putPermissionOverride(override.getRole(), null, EnumSet.of(Permission.VOICE_CONNECT))
+				.queue();
+		LiteSQL.onUpdate("INSERT INTO statchannels(guildid, categoryid) VALUES(" + guild.getIdLong() + ", "
+				+ category.getIdLong() + ")");
 		fillCategory(category);
 	}
 
-    public static void fillCategory(Category category) throws InterruptedException {
+	public static void fillCategory(Category category) throws InterruptedException {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 		SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.YYYY");
 		category.createVoiceChannel("🕗 Uhrzeit: " + df.format(Calendar.getInstance().getTime()) + "Uhr").queue();
@@ -110,18 +113,21 @@ public class StatsManager extends TimerTask {
 		List<Member> members = category.getGuild().getMembers();
 		category.createVoiceChannel("📈 Server Mitglieder: " + members.size()).queue();
 		int online = 0;
-		for(Member memb : members) {
-			if(memb.getOnlineStatus() != OnlineStatus.ONLINE) {
-				if(!memb.getUser().isBot()) {
+		for (Member memb : members) {
+			if (memb.getOnlineStatus() != OnlineStatus.ONLINE) {
+				if (!memb.getUser().isBot()) {
 					online++;
 				}
 			}
 		}
 		category.createVoiceChannel("🔘 Online User: " + online).queue();
 		category.createVoiceChannel("✅ BOT ONLINE").queue();
-		PermissionOverride override = new PermissionOverrideActionImpl(category.getJDA(), category, category.getGuild().getPublicRole()).complete();
-		//System.out.println("OVerride: " + (override == null ? "NULL" : override.toString()));
-		category.getManager().putPermissionOverride(override.getRole(), null, EnumSet.of(Permission.VOICE_CONNECT)).queue();
+		PermissionOverride override = new PermissionOverrideActionImpl(category.getJDA(), category,
+				category.getGuild().getPublicRole()).complete();
+		// System.out.println("OVerride: " + (override == null ? "NULL" :
+		// override.toString()));
+		category.getManager().putPermissionOverride(override.getRole(), null, EnumSet.of(Permission.VOICE_CONNECT))
+				.queue();
 	}
 
 	public static void sync(Category cat) {
@@ -129,20 +135,21 @@ public class StatsManager extends TimerTask {
 			chan.getManager().sync().queue();
 		});
 	}
-	
+
 	public static void updateCategory(Category cat) throws InterruptedException {
-		if(cat.getChannels().size() == 5) {
+		if (cat.getChannels().size() == 5) {
 			sync(cat);
 			List<GuildChannel> channels = cat.getChannels();
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 			SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.YYYY");
-			channels.get(0).getManager().setName("🕗 Uhrzeit: " + df.format(Calendar.getInstance().getTime()) + "Uhr").queue();
+			channels.get(0).getManager().setName("🕗 Uhrzeit: " + df.format(Calendar.getInstance().getTime()) + "Uhr")
+					.queue();
 			channels.get(1).getManager().setName("📅 Datum: " + df2.format(Calendar.getInstance().getTime())).queue();
 			List<Member> members = cat.getGuild().getMembers();
 			int online = 0;
-			for(Member memb : members) {
-				if(memb.getOnlineStatus() != OnlineStatus.ONLINE) {
-					if(!memb.getUser().isBot()) {
+			for (Member memb : members) {
+				if (memb.getOnlineStatus() != OnlineStatus.ONLINE) {
+					if (!memb.getUser().isBot()) {
 						online++;
 					}
 				}
@@ -151,26 +158,26 @@ public class StatsManager extends TimerTask {
 			channels.get(3).getManager().setName("🔘 Online User: " + online).queue();
 		}
 	}
-	
+
 	public static void checkStats() {
 		((ShardManager) Main.bot).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			try {
-				if(set.next()) {
+				if (set.next()) {
 					long catid = set.getLong("categoryid");
 					StatschannelCommand.updateCategory(guild.getCategoryById(catid));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}); 
+		});
 	}
-	
+
 	public static void onStartUP() {
 		Main.bot.getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			try {
-				if(set.next()) {
+				if (set.next()) {
 					long catid = set.getLong("categoryid");
 					Category cat = guild.getCategoryById(catid);
 					cat.getChannels().forEach(chan -> {
@@ -181,27 +188,30 @@ public class StatsManager extends TimerTask {
 			} catch (SQLException | InterruptedException e) {
 				e.printStackTrace();
 			}
-		}); 
+		});
 	}
-	
+
 	public static void onShutdown() {
 		((ShardManager) Main.bot).getGuilds().forEach(guild -> {
 			ResultSet set = LiteSQL.onQuery("SELECT categoryid FROM statchannels WHERE guildid = " + guild.getIdLong());
 			try {
-				if(set.next()) {
+				if (set.next()) {
 					long catid = set.getLong("categoryid");
 					Category cat = guild.getCategoryById(catid);
 					cat.getChannels().forEach(chan -> {
 						chan.delete().complete();
 					});
 					VoiceChannel offline = cat.createVoiceChannel("🔴 BOT OFFLINE").complete();
-					PermissionOverride override = new PermissionOverrideActionImpl(cat.getJDA(), offline, cat.getGuild().getPublicRole()).complete();
-					offline.getManager().putPermissionOverride(override.getRole(), null, EnumSet.of(Permission.VOICE_CONNECT)).queue();
+					PermissionOverride override = new PermissionOverrideActionImpl(cat.getJDA(), offline,
+							cat.getGuild().getPublicRole()).complete();
+					offline.getManager()
+							.putPermissionOverride(override.getRole(), null, EnumSet.of(Permission.VOICE_CONNECT))
+							.queue();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}); 
+		});
 	}
 
 }

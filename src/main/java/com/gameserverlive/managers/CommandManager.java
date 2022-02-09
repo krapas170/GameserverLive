@@ -22,12 +22,12 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class CommandManager {
-    
+
     private HashMap<String, ServerCommand> commands;
-    
+
     public CommandManager() {
         commands = new HashMap<>();
-        
+
         commands.put("clear", new ClearCommand());
         commands.put("exit", new ExitCommand());
         commands.put("help", new HelpCommand());
@@ -45,15 +45,15 @@ public class CommandManager {
     public ServerCommand getCommand(String key) {
         return commands.get(key);
     }
-    
+
     public boolean perform(String command, String[] args, Member m, TextChannel channel, Message message) {
-        
+
         ServerCommand cmd;
-        if((cmd = commands.get(command.toLowerCase())) != null) {
+        if ((cmd = commands.get(command.toLowerCase())) != null) {
             cmd.performCommand(args, m, channel, message);
             return true;
-        } 
+        }
         return false;
     }
-    
+
 }

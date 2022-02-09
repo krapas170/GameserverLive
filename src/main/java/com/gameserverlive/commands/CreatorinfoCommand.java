@@ -14,12 +14,11 @@ public class CreatorinfoCommand implements ServerCommand {
     public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
         String title = "Info about the creator of the bot";
         String description = "\n"
-            + "Created by pasi0104lp#9500 and cncptpr#0955\n"
-            + "Framework: JDA";
+                + "Created by pasi0104lp#9500 and cncptpr#0955\n"
+                + "Framework: JDA";
         EmbedBuilder builder = new EmbedBuilder();
         EmbedMessage.run(title, description, channel);
         channel.sendMessageEmbeds(builder.build()).queue();
     }
 
-    
 }

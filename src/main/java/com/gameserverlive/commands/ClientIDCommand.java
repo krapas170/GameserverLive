@@ -17,7 +17,7 @@ public class ClientIDCommand implements ServerCommand {
         EmbedBuilder builder = new EmbedBuilder();
         EmbedMessage.run(title, description, channel);
         channel.sendMessageEmbeds(builder.build()).queue();
-        
+
     }
-    
+
 }

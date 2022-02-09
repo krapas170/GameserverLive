@@ -21,16 +21,15 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
-
 /*
 *   The Main class for the bot
 *   Starts the bot and owns all the Managers
 */
 public class Main {
-    
+
     public final static SettingsConfig CONFIG = new SettingsConfig();
     public final static ServerConfig SERVER = new ServerConfig();
-    
+
     public static ShardManager bot;
     private static CommandManager commandManager;
     private static StatusManager statusManager;
@@ -48,19 +47,25 @@ public class Main {
 
         bot = buildBot();
         System.out.println("\n\n\nBot online!\n\n\n");
-        statusManager = new StatusManager(bot, 20, "-w %server guilds | " + CONFIG.getString("prefix") + "help", "-l %members members | " + CONFIG.getString("prefix") + "help", "-w you.", "-l %voicechannels voice channels | " + CONFIG.getString("prefix") + "help", "-l %textchannels text channels | " + CONFIG.getString("prefix") + "help");
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {try {
-            shutdown();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } System.out.println("Force shutdown!");}));
+        statusManager = new StatusManager(bot, 20, "-w %server guilds | " + CONFIG.getString("prefix") + "help",
+                "-l %members members | " + CONFIG.getString("prefix") + "help", "-w you.",
+                "-l %voicechannels voice channels | " + CONFIG.getString("prefix") + "help",
+                "-l %textchannels text channels | " + CONFIG.getString("prefix") + "help");
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                shutdown();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("Force shutdown!");
+        }));
         startShutdownListener();
         LiteSQL.connect();
-		SQLManager.onCreate();
+        SQLManager.onCreate();
         Thread.sleep(5000);
         new StatsManager(bot, 10);
-        //new GameServerManager(bot, 300);
+        // new GameServerManager(bot, 300);
     }
 
     public static ServerCommand getCommand(String key) {
@@ -68,47 +73,48 @@ public class Main {
     }
 
     /*
-    *   Sets all default Variables and builds the bot
-    */
+     * Sets all default Variables and builds the bot
+     */
     private static ShardManager buildBot() throws LoginException, IllegalArgumentException {
         DefaultShardManagerBuilder builder;
         builder = DefaultShardManagerBuilder.createDefault(CONFIG.getString("token"));
         builder.setStatus(OnlineStatus.ONLINE);
         commandManager = new CommandManager();
         builder.addEventListeners(new CommandListener());
-		builder.addEventListeners(new VoiceListener());
-		builder.addEventListeners(new JoinListener());
+        builder.addEventListeners(new VoiceListener());
+        builder.addEventListeners(new JoinListener());
         return builder.build();
     }
-    
+
     /*
-    *   Returns the command Manager
-    */
+     * Returns the command Manager
+     */
     public static CommandManager getCmdMan() {
         return commandManager;
     }
 
     public static void startShutdownListener() {
         new Thread(() -> {
-            while(true) {
+            while (true) {
                 Scanner scanner = new Scanner(System.in);
-                if(scanner.nextLine().equalsIgnoreCase("exit")) {
-                    if(bot != null) {
+                if (scanner.nextLine().equalsIgnoreCase("exit")) {
+                    if (bot != null) {
                         scanner.close();
                         System.exit(0);
                     }
-                    if(loop != null) {
+                    if (loop != null) {
                         loop.interrupt();
                     }
                 } else {
-                    System.out.printf("\n\n\n%s[Bot] /sUse 'exit' to shutdown.%s\n\n\n", Console.RED, Console.BLUE, Console.RESET);
+                    System.out.printf("\n\n\n%s[Bot] /sUse 'exit' to shutdown.%s\n\n\n", Console.RED, Console.BLUE,
+                            Console.RESET);
                 }
             }
         }).start();
     }
 
     private static void shutdown() throws InterruptedException {
-        //onShutdown();
+        // onShutdown();
         StatsManager.onShutdown();
         Thread.sleep(1000);
         statusManager.stopTimer();

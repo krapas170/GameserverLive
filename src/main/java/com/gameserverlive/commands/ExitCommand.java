@@ -18,7 +18,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.Invite.Channel;
 
-public class ExitCommand implements ServerCommand, ReactionCommand{
+public class ExitCommand implements ServerCommand, ReactionCommand {
 
     private final int time;
     private final int timeMillis;
@@ -42,11 +42,11 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
 
     @Override
     public void performCommand(String[] args, Member member, TextChannel channel, Message message) {
-        if(running)
+        if (running)
             return;
 
         message.delete().queue();
-        if(member.hasPermission(Permission.ADMINISTRATOR)) {
+        if (member.hasPermission(Permission.ADMINISTRATOR)) {
             queueShutdown(channel);
         } else {
             sendInvalidCommandMessage(channel);
@@ -54,19 +54,20 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
     }
 
     private void sendInvalidCommandMessage(TextChannel channel) {
-        channel.sendMessage("```You don't have high enough permissions to shut me down.\n\nBitch!```").complete().delete().queueAfter(10, TimeUnit.SECONDS);
+        channel.sendMessage("```You don't have high enough permissions to shut me down.\n\nBitch!```").complete()
+                .delete().queueAfter(10, TimeUnit.SECONDS);
     }
 
     private void queueShutdown(TextChannel channel) {
         running = true;
         sendShutdownMessage(channel);
         Console.info("Shutdown Message send!");
-        //startCancelListener(message);
+        // startCancelListener(message);
         new Timer(timeMillis, e -> performShutdown()).start();
     }
 
     private void performShutdown() {
-        if(cancel)
+        if (cancel)
             return;
         Console.println("%red%stopping");
         message.delete().complete();
@@ -74,31 +75,31 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
     }
 
     /*
-    private MessageReaction getEmote(Message message) {
-        for(MessageReaction reaction : message.getReactions()) {
-            if(reaction.getReactionEmote().getEmoji().equals(emoji))
-                return reaction;
-            System.out.println(Console.BLUE + "Emoji" + reaction.getReactionEmote().getEmoji() + Console.RESET);
-        }
-        return null;
-    }
-    */
+     * private MessageReaction getEmote(Message message) {
+     * for(MessageReaction reaction : message.getReactions()) {
+     * if(reaction.getReactionEmote().getEmoji().equals(emoji))
+     * return reaction;
+     * System.out.println(Console.BLUE + "Emoji" +
+     * reaction.getReactionEmote().getEmoji() + Console.RESET);
+     * }
+     * return null;
+     * }
+     */
 
     private void sendShutdownMessage(TextChannel channel) {
-        String messageText = 
-        "```\n" +
-        "Shutting down GameserverLive in %time\n\n"+
-        "Click the emoji to cancel\n" +
-        "```";
+        String messageText = "```\n" +
+                "Shutting down GameserverLive in %time\n\n" +
+                "Click the emoji to cancel\n" +
+                "```";
 
         message = channel.sendMessage("Wait").complete();
-        //message.addReaction(emoji).complete();
+        // message.addReaction(emoji).complete();
         new Thread(() -> queueCountDown(messageText, time)).start();
     }
 
     private void queueCountDown(String messageText, int time) {
         Console.info("conting down");
-        for(int i = 0; i < time; i++) {
+        for (int i = 0; i < time; i++) {
 
             countDown(messageText, time - i);
             if (cancel) {
@@ -107,13 +108,13 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
                 break;
             }
 
-            //Just a timer
-            //Somehow doesn't work in an other Method ¯\_(ツ)_/¯
+            // Just a timer
+            // Somehow doesn't work in an other Method ¯\_(ツ)_/¯
 
             AtomicBoolean wait = new AtomicBoolean(true);
             new Timer(1000, e -> wait.set(false)).start();
 
-            while(wait.get()) {
+            while (wait.get()) {
 
             }
         }
@@ -125,7 +126,7 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
     }
 
     private void editMessage(String messageText, int i) {
-        if(message != null)
+        if (message != null)
             message.editMessage(messageText.replaceAll("%time", "" + i)).queue();
     }
 
@@ -137,12 +138,13 @@ public class ExitCommand implements ServerCommand, ReactionCommand{
 
     @Override
     public void reacted(MessageReaction reaction, String messageId, User user, Channel channel) {
-        System.out.println("Emoji: Name: " + reaction.getReactionEmote().getName() + "; Emoji: " + reaction.getReactionEmote().getEmoji());
-        if(reaction.getReactionEmote().getName().equals(emoji) 
-            && messageId.equals(message.getId()) 
-            && reaction.getCount() > 2) {
-                cancel = true;
-            }
+        System.out.println("Emoji: Name: " + reaction.getReactionEmote().getName() + "; Emoji: "
+                + reaction.getReactionEmote().getEmoji());
+        if (reaction.getReactionEmote().getName().equals(emoji)
+                && messageId.equals(message.getId())
+                && reaction.getCount() > 2) {
+            cancel = true;
+        }
     }
 
 }

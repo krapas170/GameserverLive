@@ -13,32 +13,32 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class ReactionListener extends ListenerAdapter {
 
-	
 	@Override
 	public void onMessageReactionAdd(MessageReactionAddEvent event) {
-		
-		if(event.getChannelType() == ChannelType.TEXT) {
-			if(!event.getUser().isBot()) {
+
+		if (event.getChannelType() == ChannelType.TEXT) {
+			if (!event.getUser().isBot()) {
 				long guildid = event.getGuild().getIdLong();
 				long channelid = event.getChannel().getIdLong();
 				long messageid = event.getMessageIdLong();
 				String emote = "";
-				
-				if(event.getReactionEmote().isEmoji()) {
+
+				if (event.getReactionEmote().isEmoji()) {
 					emote = event.getReactionEmote().getEmoji();
-				}
-				else {
+				} else {
 					emote = event.getReactionEmote().getId();
 				}
-				
-				ResultSet set = LiteSQL.onQuery("SELECT rollenid FROM reactroles WHERE guildid = " + guildid + " AND channelid = " + channelid + " AND messageid = " + messageid + " AND emote = '" + emote + "'");
-				
+
+				ResultSet set = LiteSQL
+						.onQuery("SELECT rollenid FROM reactroles WHERE guildid = " + guildid + " AND channelid = "
+								+ channelid + " AND messageid = " + messageid + " AND emote = '" + emote + "'");
+
 				try {
-					if(set.next()) {
+					if (set.next()) {
 						long rollenid = set.getLong("rollenid");
-						
+
 						Guild guild = event.getGuild();
-			
+
 						guild.addRoleToMember(event.getMember(), guild.getRoleById(rollenid)).queue();
 					}
 				} catch (SQLException e) {
@@ -46,32 +46,33 @@ public class ReactionListener extends ListenerAdapter {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onMessageReactionRemove(MessageReactionRemoveEvent event) {
-		
-		if(event.getChannelType() == ChannelType.TEXT) {
-			if(!event.getUser().isBot()) {
+
+		if (event.getChannelType() == ChannelType.TEXT) {
+			if (!event.getUser().isBot()) {
 				long guildid = event.getGuild().getIdLong();
 				long channelid = event.getChannel().getIdLong();
 				long messageid = event.getMessageIdLong();
 				String emote = "";
-				
-				if(event.getReactionEmote().isEmoji()) {
+
+				if (event.getReactionEmote().isEmoji()) {
 					emote = event.getReactionEmote().getEmoji();
-				}
-				else {
+				} else {
 					emote = event.getReactionEmote().getId();
 				}
-				
-				ResultSet set = LiteSQL.onQuery("SELECT rollenid FROM reactroles WHERE guildid = " + guildid + " AND channelid = " + channelid + " AND messageid = " + messageid + " AND emote = '" + emote + "'");
-				
+
+				ResultSet set = LiteSQL
+						.onQuery("SELECT rollenid FROM reactroles WHERE guildid = " + guildid + " AND channelid = "
+								+ channelid + " AND messageid = " + messageid + " AND emote = '" + emote + "'");
+
 				try {
-					if(set.next()) {
+					if (set.next()) {
 						long rollenid = set.getLong("rollenid");
-						
+
 						Guild guild = event.getGuild();
 
 						guild.removeRoleFromMember(event.getMember(), guild.getRoleById(rollenid)).queue();
@@ -81,7 +82,7 @@ public class ReactionListener extends ListenerAdapter {
 				}
 			}
 		}
-		
+
 	}
-	
+
 }

@@ -16,7 +16,7 @@ public class InviteCommand implements ServerCommand {
 
     @Override
     public void performCommand(String[] args, Member m, TextChannel channel, Message message) {
-            
+
         EmbedMessage.run(title, description, channel);
         channel.sendMessageEmbeds(builder.build()).queue();
     }

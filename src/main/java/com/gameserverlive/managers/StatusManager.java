@@ -6,11 +6,11 @@ import java.util.TimerTask;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
-public class StatusManager extends TimerTask{
+public class StatusManager extends TimerTask {
 
     private Timer timer;
     private ShardManager bot;
-    private String[] activitys; 
+    private String[] activitys;
     private int time;
 
     private final String WACHING_KEY = "-w ";
@@ -59,16 +59,16 @@ public class StatusManager extends TimerTask{
         int guildsCount = bot.getGuilds().size();
         int voicechannelcount = bot.getVoiceChannels().size();
         int textchannelcount = bot.getTextChannels().size();
-        
+
         return string.replaceAll("%server", "" + guildsCount)
-            .replaceAll("%members", "" + membersCount)
-            .replaceAll("%voicechannels", "" + voicechannelcount)
-            .replaceAll("%textchannels", "" + textchannelcount);
+                .replaceAll("%members", "" + membersCount)
+                .replaceAll("%voicechannels", "" + voicechannelcount)
+                .replaceAll("%textchannels", "" + textchannelcount);
 
     }
 
     private int rand(int range) {
-        return (int)(Math.random() * range);
+        return (int) (Math.random() * range);
     }
-    
+
 }
