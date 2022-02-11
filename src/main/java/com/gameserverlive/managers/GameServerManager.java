@@ -12,6 +12,7 @@ import java.util.TimerTask;
 import com.gameserverlive.Main;
 import com.gameserverlive.commands.StatschannelCommand;
 
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Category;
@@ -60,7 +61,19 @@ public class GameServerManager extends TimerTask {
     }
 
     private void updateGameserverStatus(Guild guild) throws SQLException, InterruptedException {
-	}
+        ResultSet result = LiteSQL.onQuery("SELECT * FROM gameserver WHERE messageid = " + message.getIdLong());
+
+		if (!result.next())
+			return;
+
+		long messageid = result.getLong("categoryid");
+		Category category = guild.getCategoryById(messageid);
+
+		updateMessage(category);
+
+		// deleteChannels(category);
+		// fillCategory(category);
+    }
 
 	private static boolean shouldDelete(String[] args) {
         return args.length == 2 && args[1].equalsIgnoreCase("delete");
