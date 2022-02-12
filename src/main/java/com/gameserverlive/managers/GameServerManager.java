@@ -66,7 +66,7 @@ public class GameServerManager extends TimerTask {
 		if (!result.next())
 			return;
 
-		long messageid = result.getLong("categoryid");
+		long messageid = result.getLong("messageid");
 		Category category = guild.getCategoryById(messageid);
 
 		updateMessage(category);
