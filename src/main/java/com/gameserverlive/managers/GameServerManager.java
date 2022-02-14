@@ -61,17 +61,14 @@ public class GameServerManager extends TimerTask {
 		}
     }
 
-    private void updateGameserverStatus(Guild guild, Channel channel, Message message) throws SQLException, InterruptedException {
-        ResultSet guildresult = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + guild.getIdLong());
-        ResultSet channelresult = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + channel.getIdLong());
-        ResultSet messageresult = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + message.getIdLong());
-
+    private void updateGameserverStatus(Guild guild) throws SQLException, InterruptedException {
+        ResultSet result = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + guild.getIdLong());
 
 		if (!result.next())
 			return;
 
-		long messageid = result.getLong("messageid");
-		Category category = guild.getCategoryById(messageid);
+		long categoryid = result.getLong("categoryid");
+		Category category = guild.getCategoryById(categoryid);
 
 		updateMessage(category);
 
