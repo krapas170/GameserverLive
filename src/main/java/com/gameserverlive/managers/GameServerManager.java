@@ -22,6 +22,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.PermissionOverride;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.Invite.Channel;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.internal.requests.restaction.PermissionOverrideActionImpl;
 
@@ -60,8 +61,11 @@ public class GameServerManager extends TimerTask {
 		}
     }
 
-    private void updateGameserverStatus(Guild guild) throws SQLException, InterruptedException {
-        ResultSet result = LiteSQL.onQuery("SELECT * FROM gameserver WHERE messageid = " + message.getIdLong());
+    private void updateGameserverStatus(Guild guild, Channel channel, Message message) throws SQLException, InterruptedException {
+        ResultSet guildresult = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + guild.getIdLong());
+        ResultSet channelresult = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + channel.getIdLong());
+        ResultSet messageresult = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + message.getIdLong());
+
 
 		if (!result.next())
 			return;
