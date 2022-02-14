@@ -2,29 +2,13 @@ package com.gameserverlive.managers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.EnumSet;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.gameserverlive.Main;
-import com.gameserverlive.commands.StatschannelCommand;
-
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.PermissionOverride;
-import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.api.entities.Invite.Channel;
 import net.dv8tion.jda.api.sharding.ShardManager;
-import net.dv8tion.jda.internal.requests.restaction.PermissionOverrideActionImpl;
 
 public class GameServerManager extends TimerTask {
 
