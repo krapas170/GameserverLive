@@ -1,13 +1,18 @@
 package com.gameserverlive.managers;
 
+import java.lang.reflect.Member;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
 public class GameServerManager extends TimerTask {
@@ -51,10 +56,10 @@ public class GameServerManager extends TimerTask {
 		if (!result.next())
 			return;
 
-		long categoryid = result.getLong("categoryid");
-		Category category = guild.getCategoryById(categoryid);
+        long textchannelid = result.getLong("messageid");
+        TextChannel channel = guild.getTextChannelById(textchannelid);
 
-		updateMessage(category);
+		updateMessage(channel);
 
 		// deleteChannels(category);
 		// fillCategory(category);
@@ -79,13 +84,15 @@ public class GameServerManager extends TimerTask {
     public static void fillMessage(Message message) throws InterruptedException {
     }
 
-    public static void sync(Category cat) {
-        cat.getChannels().forEach(chan -> {
+    public static void sync(TextChannel channel) {
+        ((Category) channel).getChannels().forEach(chan -> {
             chan.getManager().sync().queue();
         });
     }
 
-    public static void updateMessage(Category cat) throws InterruptedException {
+    public static void updateMessage(TextChannel channel) throws InterruptedException {
+        System.out.println(channel);
+		
     }
 
     public static void onShutdown() {
