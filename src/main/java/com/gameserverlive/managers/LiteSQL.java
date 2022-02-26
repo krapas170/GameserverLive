@@ -16,8 +16,6 @@ public class LiteSQL {
 	public static void connect() throws InterruptedException {
 		conn = null;
 
-		Thread.sleep(5000);
-
 		try {
 			File file = new File("datenbank.db");
 			if (!file.exists()) {

@@ -71,7 +71,7 @@ public class StatsManager extends TimerTask {
 		long categoryid = result.getLong("categoryid");
 		Category category = guild.getCategoryById(categoryid);
 
-		updateCategory(category);
+		updateCategory(category); //Geht zu schnell, da kommt ein Encountered 429 Fehler von Discord
 
 		// deleteChannels(category);
 		// fillCategory(category);

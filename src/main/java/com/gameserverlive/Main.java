@@ -63,7 +63,7 @@ public class Main {
         startShutdownListener();
         LiteSQL.connect();
         SQLManager.onCreate();
-        Thread.sleep(5000);
+        Thread.sleep(500);
         new StatsManager(bot, 20);
         new GameServerManager(bot, 300);
     }
