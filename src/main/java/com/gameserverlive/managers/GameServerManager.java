@@ -1,16 +1,12 @@
 package com.gameserverlive.managers;
 
-import java.lang.reflect.Member;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.sharding.ShardManager;
@@ -50,13 +46,13 @@ public class GameServerManager extends TimerTask {
 		}
     }
 
-    private void updateGameserverStatus(Guild guild) throws SQLException, InterruptedException {
+    private void updateGameserverStatus(Guild guild) throws SQLException {
         ResultSet result = LiteSQL.onQuery("SELECT * FROM gameserver WHERE guildid = " + guild.getIdLong());
 
 		if (!result.next())
 			return;
 
-        long textchannelid = result.getLong("messageid");
+        long textchannelid = result.getLong("channelid");
         TextChannel channel = guild.getTextChannelById(textchannelid);
 
 		updateMessage(channel);
@@ -90,7 +86,7 @@ public class GameServerManager extends TimerTask {
         });
     }
 
-    public static void updateMessage(TextChannel channel) throws InterruptedException {
+    public static void updateMessage(TextChannel channel) {
         System.out.println(channel);
 		
     }
